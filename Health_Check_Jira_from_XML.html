@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="https://fhalidator.fanhattan.com/batch/job/52f8e2716aa53404a5001c7b" />
+<title>Health_Check_Jira_from_XML</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">Health_Check_Jira_from_XML</td></tr>
+</thead><tbody>
+<tr>
+	<td>open</td>
+	<td>http://jira.corporate.local/secure/RapidBoard.jspa?rapidView=389</td>
+	<td></td>
+</tr>
+<tr>
+	<td>selectWindow</td>
+	<td>null</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=create_link</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>id=qf-create-another</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=qf-create-another</td>
+	<td></td>
+</tr>
+<tr>
+	<td>loadTestData</td>
+	<td>file://c:/Users/Strider/Documents/Work/Rovi/HealthCheck_Jira.xml</td>
+	<td></td>
+</tr>
+<tr>
+	<td>while</td>
+	<td>!testdata.EOF()</td>
+	<td></td>
+</tr>
+<tr>
+	<td>nextTestData</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForEditable</td>
+	<td>id=summary</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=summary</td>
+	<td>${item_report}</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=labels-textarea</td>
+	<td>DataHealth</td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>50</td>
+	<td></td>
+</tr>
+<tr>
+	<td>sendKeys</td>
+	<td>id=labels-textarea</td>
+	<td> </td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>50</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>id=create-issue-submit</td>
+	<td></td>
+</tr>
+<tr>
+	<td>pause</td>
+	<td>6000</td>
+	<td></td>
+</tr>
+<tr>
+	<td>endWhile</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>link=Cancel</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

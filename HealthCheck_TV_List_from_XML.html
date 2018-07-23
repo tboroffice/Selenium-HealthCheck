@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="https://fhalidator.fanhattan.com/batch/job/52f8e2716aa53404a5001c7b" />
+<title>HealthCheck_TV_List_from_XML</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">HealthCheck_TV_List_from_XML</td></tr>
+</thead><tbody>
+<tr>
+	<td>store</td>
+	<td>&lt;testdata&gt;</td>
+	<td>xmlData</td>
+</tr>
+<tr>
+	<td>loadTestData</td>
+	<td>file://c:/Users/Strider/Documents/Work/Rovi/Mergeshows.xml</td>
+	<td></td>
+</tr>
+<tr>
+	<td>while</td>
+	<td>!testdata.EOF()</td>
+	<td></td>
+</tr>
+<tr>
+	<td>nextTestData</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${sourceID}</td>
+	<td>source_ID_var</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${title}</td>
+	<td>Fan_title_var</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.Fan_title_var.replace(/&amp;/g,&quot;&amp;amp;&quot;).replace(/[&gt;]/g,&quot;&amp;gt;&quot;).replace(/[&lt;]/g,&quot;&amp;lt;&quot;).replace(/[`’]/g,&quot;&amp;apos;&quot;).replace(/'/g,&quot;&amp;apos;&quot;).replace(/&quot;/g,&quot;&amp;quot;&quot;)</td>
+	<td>Fan_title_var</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${Fan_List}</td>
+	<td>source_list</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.source_list.replace(/&amp;/g,&quot;&amp;amp;&quot;).replace(/[&gt;]/g,&quot;&amp;gt;&quot;).replace(/[&lt;]/g,&quot;&amp;lt;&quot;).replace(/[`’]/g,&quot;&amp;apos;&quot;).replace(/'/g,&quot;&amp;apos;&quot;).replace(/&quot;/g,&quot;&amp;quot;&quot;)</td>
+	<td>source_list</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${Release_details}</td>
+	<td>viewing_list</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.viewing_list.replace(/&amp;/g,&quot;&amp;amp;&quot;).replace(/[&gt;]/g,&quot;&amp;gt;&quot;).replace(/[&lt;]/g,&quot;&amp;lt;&quot;).replace(/[`’]/g,&quot;&amp;apos;&quot;).replace(/'/g,&quot;&amp;apos;&quot;).replace(/&quot;/g,&quot;&amp;quot;&quot;)</td>
+	<td>viewing_list</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.source_ID_var == &quot;0&quot;</td>
+	<td>no_id_label</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>http://api.fanhattan.com/3.1/content/tv/series/${sourceID}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeXpathCount</td>
+	<td>//div[@id='json']/ul/li[16]/ul/li</td>
+	<td>season_count</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${season_count}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${test}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>##</td>
+	<td>seasons_string</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>N</td>
+	<td>dupe_seasons_string</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>0</td>
+	<td>latest_season_id</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>parseInt(0)</td>
+	<td>latest_season</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.season_count &lt; 1</td>
+	<td>other_metadata_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>parseInt(1)</td>
+	<td>counter</td>
+</tr>
+<tr>
+	<td>storeText</td>
+	<td>//div[@id='json']/ul/li[16]/ul/li[${counter}]/ul/li[2]/span[2]</td>
+	<td>season_number</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>parseInt(storedVars.season_number)</td>
+	<td>first_season</td>
+</tr>
+<tr>
+	<td>while</td>
+	<td>storedVars.counter &lt;= storedVars.season_count</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeText</td>
+	<td>//div[@id='json']/ul/li[16]/ul/li[${counter}]/ul/li[2]/span[2]</td>
+	<td>season_number</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.seasons_string.search(&quot;##&quot;+storedVars.season_number+&quot;##&quot;) != -1</td>
+	<td>dupe_season_add_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>parseInt(storedVars.season_number) &gt; storedVars.latest_season ? storedVars.season_number : storedVars.latest_season</td>
+	<td>latest_season</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.seasons_string+storedVars.season_number+&quot;##&quot;</td>
+	<td>seasons_string</td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>latest_season_metadata_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>dupe_season_add_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.dupe_seasons_string+&quot;##&quot;</td>
+	<td>dupe_seasons_string_check</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.dupe_seasons_string_check.search(&quot;##&quot;+storedVars.season_number+&quot;##&quot;) != -1</td>
+	<td>latest_season_metadata_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.dupe_seasons_string.replace(&quot;N&quot;, &quot;Y &quot;)+&quot;##&quot;+storedVars.season_number</td>
+	<td>dupe_seasons_string</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>latest_season_metadata_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeCssCount</td>
+	<td>css=ul.array.collapsible &gt; li &gt; ul.obj.collapsible:contains(&quot;season_number&quot;):contains(&quot;${latest_season}&quot;)</td>
+	<td>latest_season_copies</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.latest_season_copies &lt; 1</td>
+	<td>season_skip_label</td>
+</tr>
+<tr>
+	<td>storeText</td>
+	<td>//div[@id='json']/ul/li[16]/ul/li[${counter}]/ul/li/span[2]</td>
+	<td>latest_season_id</td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>season_skip_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>season_skip_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.counter + 1</td>
+	<td>counter</td>
+</tr>
+<tr>
+	<td>endWhile</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${dupe_seasons_string}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.seasons_string.replace(&quot;##&quot;,&quot;&quot;).replace(/[#]{2}/g, &quot;, &quot;)</td>
+	<td>seasons_string</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.dupe_seasons_string.replace(&quot;##&quot;,&quot;&quot;).replace(/[#]{2}/g, &quot;, &quot;)</td>
+	<td>dupe_seasons_string</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${latest_season_copies}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${latest_season_id}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeElementPresent</td>
+	<td>//div[@id='json']/ul/li[22]/ul/li[4]/ul/li[2]/span[2]</td>
+	<td>landing_season_present</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.landing_season_present != true</td>
+	<td>other_metadata_label</td>
+</tr>
+<tr>
+	<td>storeText</td>
+	<td>//div[@id='json']/ul/li[22]/ul/li[4]/ul/li[2]/span[2]</td>
+	<td>landing_season_number</td>
+</tr>
+<tr>
+	<td>storeText</td>
+	<td>//div[@id='json']/ul/li[22]/ul/li[4]/ul/li/span[2]</td>
+	<td>landing_season_id</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>parseInt(storedVars.landing_season_number)</td>
+	<td>landing_season_number</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.landing_season_number == storedVars.first_season</td>
+	<td>other_metadata_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.landing_season_number &lt;= storedVars.latest_season ? storedVars.landing_season_number : storedVars.latest_season</td>
+	<td>latest_season</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.landing_season_number &lt;= storedVars.latest_season ? storedVars.landing_season_id : storedVars.latest_season_id</td>
+	<td>latest_season_id</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>other_metadata_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeXpathCount</td>
+	<td>//div[@id='json']/ul/li[12]/ul/li/ul[1]/li</td>
+	<td>image_count</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${image_count}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeText</td>
+	<td>//div[@id='json']/ul/li[18]/span[2]</td>
+	<td>first_airdate</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.first_airdate.replace(/[&quot;]/g,&quot;&quot;)</td>
+	<td>first_airdate</td>
+</tr>
+<tr>
+	<td>storeText</td>
+	<td>//div[@id='json']/ul/li[19]/span[2]</td>
+	<td>last_airdate</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.last_airdate.replace(/[&quot;]/g,&quot;&quot;)</td>
+	<td>last_airdate</td>
+</tr>
+<tr>
+	<td>storeText</td>
+	<td>//div[@id='json']/ul/li[20]/span[2]</td>
+	<td>next_airdate</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.next_airdate.replace(/[&quot;]/g,&quot;&quot;)</td>
+	<td>next_airdate</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>image_check_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>http://api.fanhattan.com/3.1/content/tv/series/${sourceID}/images</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeCssCount</td>
+	<td>css=ul.obj.collapsible &gt; li:contains(&quot;backdrops&quot;) &gt; ul.array.collapsible &gt; li</td>
+	<td>image_backdrops</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${image_backdrops}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeCssCount</td>
+	<td>css=ul.obj.collapsible &gt; li:contains(&quot;banners&quot;) &gt; ul.array.collapsible &gt; li</td>
+	<td>image_banners</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${image_banners}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeCssCount</td>
+	<td>css=ul.obj.collapsible &gt; li:contains(&quot;posters&quot;) &gt; ul.array.collapsible &gt; li</td>
+	<td>image_posters</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${image_posters}</td>
+	<td></td>
+</tr>
+<!--Here we redo the duplicate check at the episode level for the latest season-->
+<tr>
+	<td>label</td>
+	<td>latest_season_episode_check_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>parseInt(0)</td>
+	<td>latest_episode</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td></td>
+	<td>episodes_string</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>N</td>
+	<td>dupe_episodes_string</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td></td>
+	<td>episode_count</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.latest_season == 0</td>
+	<td>no_id_label</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.latest_season_copies &lt; 1</td>
+	<td>no_id_label</td>
+</tr>
+<tr>
+	<td>open</td>
+	<td>http://api.fanhattan.com/3.1/content/tv/seasons/${latest_season_id}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeXpathCount</td>
+	<td>//div[@id='json']/ul/li[9]/ul/li</td>
+	<td>episode_count</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${episode_count}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${test}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>##</td>
+	<td>episodes_string</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>N</td>
+	<td>dupe_episodes_string</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>parseInt(1)</td>
+	<td>counter</td>
+</tr>
+<tr>
+	<td>while</td>
+	<td>storedVars.counter &lt;= storedVars.episode_count</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeText</td>
+	<td>//div[@id='json']/ul/li[9]/ul/li[${counter}]/ul/li[2]/span[2]</td>
+	<td>episode_number</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.episodes_string.search(&quot;##&quot;+storedVars.episode_number+&quot;##&quot;) != -1</td>
+	<td>dupe_episode_add_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>parseInt(storedVars.episode_number) &gt; storedVars.latest_episode ? storedVars.episode_number : storedVars.latest_episode</td>
+	<td>latest_episode</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.episodes_string+storedVars.episode_number+&quot;##&quot;</td>
+	<td>episodes_string</td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>episode_skip_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>dupe_episode_add_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.dupe_episodes_string+&quot;##&quot;</td>
+	<td>dupe_episodes_string_check</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.dupe_episodes_string_check.search(&quot;##&quot;+storedVars.episode_number+&quot;##&quot;) != -1</td>
+	<td>episode_skip_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.dupe_episodes_string.replace(&quot;N&quot;, &quot;Y &quot;)+&quot;##&quot;+storedVars.episode_number</td>
+	<td>dupe_episodes_string</td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>episode_skip_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>episode_skip_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.counter + 1</td>
+	<td>counter</td>
+</tr>
+<tr>
+	<td>endWhile</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${dupe_episodes_string}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.episodes_string.replace(&quot;##&quot;,&quot;&quot;).replace(/[#]{2}/g, &quot;, &quot;)</td>
+	<td>episodes_string</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.dupe_episodes_string.replace(&quot;##&quot;,&quot;&quot;).replace(/[#]{2}/g, &quot;, &quot;)</td>
+	<td>dupe_episodes_string</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.next_airdate.search('-') == -1</td>
+	<td>use_season_last_air_date_label</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>((storedVars.next_airdate.split('-')[0].search(storedVars.today_year) != -1)&amp;&amp;(storedVars.next_airdate.split('-')[1].search(storedVars.today_month) != -1)&amp;&amp;(storedVars.next_airdate.split('-')[2].search(storedVars.today_day) != -1)) != true</td>
+	<td>xml_write_label</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>use_season_last_air_date_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeText</td>
+	<td>//div[@id='json']/ul/li[12]/span[2]</td>
+	<td>last_airdate_season</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.last_airdate_season.replace(/[&quot;]/g,&quot;&quot;)</td>
+	<td>last_airdate_season</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>((storedVars.last_airdate_season.split('-')[0].search(storedVars.today_year) != -1)&amp;&amp;(storedVars.last_airdate_season.split('-')[1].search(storedVars.today_month) != -1)&amp;&amp;(storedVars.last_airdate_season.split('-')[2].search(storedVars.today_day) != -1)) != true</td>
+	<td>xml_write_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.last_airdate_season</td>
+	<td>next_airdate</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${next_airdate}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>xml_write_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${dupe_seasons_string}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>no_id_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>xml_write_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.xmlData+ '&lt;test source=&quot;${source_list}&quot; title=&quot;${Fan_title_var}&quot; sourceID=&quot;${sourceID}&quot; seasons=&quot;${season_count}&quot; season_dupes=&quot;${dupe_seasons_string}&quot; latest_season=&quot;${latest_season}&quot; season_ID=&quot;${latest_season_id}&quot; latest_season_episodes=&quot;${episode_count}&quot; streaming_source=&quot;${viewing_list}&quot; current_season_ep_dupes=&quot;${dupe_episodes_string}&quot; backdrops=&quot;${image_backdrops}&quot; posters=&quot;${image_posters}&quot; first_aired=&quot;${first_airdate}&quot; last_aired=&quot;${last_airdate}&quot; next_airs=&quot;${next_airdate}&quot; season_list=&quot;${seasons_string}&quot; current_season_ep_list=&quot;${episodes_string}&quot;/&gt;'</td>
+	<td>xmlData</td>
+</tr>
+<tr>
+	<td>endWhile</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>runScript</td>
+	<td>javascript{storedVars['xmlData'] += '&lt;/testdata&gt;';}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>exit_prompt_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>prompt(&quot;XML Data&quot;,storedVars.xmlData)</td>
+	<td>output_string_var</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${xmlData}</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

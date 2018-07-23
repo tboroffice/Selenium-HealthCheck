@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="https://fhalidator.fanhattan.com/batch/job/52f8e2716aa53404a5001c7b" />
+<title>HealthCheck_TV_Reports_from_XML</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">HealthCheck_TV_Reports_from_XML</td></tr>
+</thead><tbody>
+<tr>
+	<td>store</td>
+	<td>&lt;testdata&gt;</td>
+	<td>xmlData</td>
+</tr>
+<tr>
+	<td>loadTestData</td>
+	<td>file://c:/Users/Strider/Documents/Work/Rovi/HealthCheck_TV_Output.xml</td>
+	<td></td>
+</tr>
+<tr>
+	<td>while</td>
+	<td>!testdata.EOF()</td>
+	<td></td>
+</tr>
+<tr>
+	<td>nextTestData</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td></td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td> - has </td>
+	<td>first_connector_string</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${sourceID}</td>
+	<td>source_ID_var</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.tv_id_rejectlist.search('#'+storedVars.source_ID_var+'#') != -1</td>
+	<td>xml_skip_label</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${title}</td>
+	<td>Fan_title_var</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.Fan_title_var.replace(/&amp;/g,&quot;&amp;amp;&quot;).replace(/[&gt;]/g,&quot;&amp;gt;&quot;).replace(/[&lt;]/g,&quot;&amp;lt;&quot;).replace(/[`’]/g,&quot;&amp;apos;&quot;).replace(/'/g,&quot;&amp;apos;&quot;).replace(/&quot;/g,&quot;&amp;quot;&quot;)</td>
+	<td>Fan_title_var</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${source}</td>
+	<td>source_list</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.source_list.replace(/&amp;/g,&quot;&amp;amp;&quot;).replace(/[&gt;]/g,&quot;&amp;gt;&quot;).replace(/[&lt;]/g,&quot;&amp;lt;&quot;).replace(/[`’]/g,&quot;&amp;apos;&quot;).replace(/'/g,&quot;&amp;apos;&quot;).replace(/&quot;/g,&quot;&amp;quot;&quot;)</td>
+	<td>source_list</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.Fan_title_var == &quot;&quot; ? storedVars.source_list+&quot; / &quot;+storedVars.source_ID_var : storedVars.source_list+&quot; / &quot;+storedVars.Fan_title_var</td>
+	<td>programming_source</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.source_ID_var == &quot;0&quot;</td>
+	<td>no_id_label</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.Fan_title_var != &quot;&quot;</td>
+	<td>check_season_duplicates_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string+storedVars.first_connector_string+&quot;no title&quot;</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>check_season_duplicates_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${latest_season}</td>
+	<td>season_var</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${season_dupes}</td>
+	<td>season_duplicate_var</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.season_duplicate_var == &quot;N&quot;</td>
+	<td>check_episode_duplicates_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string.search(storedVars.first_connector_string) != -1 ? storedVars.incident_string+&quot;, &quot; : storedVars.incident_string+storedVars.first_connector_string</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string+&quot;duplicate seasons &quot;+storedVars.season_duplicate_var.replace(&quot;Y&quot;,&quot;&quot;)</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>check_episode_duplicates_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${current_season_ep_dupes}</td>
+	<td>ep_duplicates_var</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.ep_duplicates_var == &quot;N&quot;</td>
+	<td>check_first_airdate_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string.search(storedVars.first_connector_string) != -1 ? storedVars.incident_string+&quot;, &quot; : storedVars.incident_string+storedVars.first_connector_string</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string+&quot;Season ${season_var} duplicate episodes &quot;+storedVars.ep_duplicates_var.replace(&quot;Y&quot;,&quot;&quot;)</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>check_first_airdate_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${first_aired}</td>
+	<td>first_airdate_var</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${next_airs}</td>
+	<td>next_airdate_var</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>(storedVars.first_airdate_var != &quot;null&quot;)||(storedVars.next_airdate_var != &quot;null&quot;)</td>
+	<td>on_tonight_check_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string.search(storedVars.first_connector_string) != -1 ? storedVars.incident_string+&quot;, &quot; : storedVars.incident_string+storedVars.first_connector_string</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string+&quot;no first airdate&quot;</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>on_tonight_check_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.source_list !=&quot;On Tonight&quot;</td>
+	<td>check_backdrops_label</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.next_airdate_var.search('-') == -1</td>
+	<td>check_null_date_label</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>(parseInt(storedVars.next_airdate_var.split('-')[0])==storedVars.today_year)&amp;&amp;(parseInt(storedVars.next_airdate_var.split('-')[1])==storedVars.today_month)&amp;&amp;(parseInt(storedVars.next_airdate_var.split('-')[2])==storedVars.today_day)</td>
+	<td>check_backdrops_label</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>((storedVars.next_airdate_var.split('-')[0].search(storedVars.today_year) != -1)&amp;&amp;(storedVars.next_airdate_var.split('-')[1].search(storedVars.today_month) != -1)&amp;&amp;(storedVars.next_airdate_var.split('-')[2].search(storedVars.today_day) != -1)) != true</td>
+	<td>check_backdrops_label</td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>investigate_tonight_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>check_null_date_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.next_airdate_var != &quot;null&quot;</td>
+	<td>investigate_tonight_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string.search(storedVars.first_connector_string) != -1 ? storedVars.incident_string+&quot;, &quot; : storedVars.incident_string+storedVars.first_connector_string</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string+&quot;no new or unaired episodes matching tonight&amp;apos;s airdate (ignore if reruns expected)&quot;</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>check_backdrops_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>investigate_tonight_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string.search(storedVars.first_connector_string) != -1 ? storedVars.incident_string+&quot;, &quot; : storedVars.incident_string+&quot; - &quot;</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string+&quot;please investigate to ensure an episode matches tonight&amp;apos;s airdate&quot;</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>check_backdrops_label</td>
+	<td></td>
+</tr>
+<!--Skipping cast and crew checks, but leaving code in island for now-->
+<tr>
+	<td>label</td>
+	<td>check_cast_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${cast}</td>
+	<td>cast_count</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.cast_count != &quot;0&quot;</td>
+	<td>check_crew_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string.search(storedVars.first_connector_string) != -1 ? storedVars.incident_string+&quot;, &quot; : storedVars.incident_string+storedVars.first_connector_string</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string+&quot;no cast&quot;</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>check_crew_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${crew}</td>
+	<td>crew_count</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.crew_count != &quot;0&quot;</td>
+	<td>check_backdrops_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string.search(storedVars.first_connector_string) != -1 ? storedVars.incident_string+&quot;, &quot; : storedVars.incident_string+storedVars.first_connector_string</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string+&quot;no crew&quot;</td>
+	<td>incident_string</td>
+</tr>
+<!--End of Island-->
+<tr>
+	<td>label</td>
+	<td>check_backdrops_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${streaming_source}</td>
+	<td>viewing_source_list</td>
+</tr>
+<!--Netflix Bypass-->
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.netflix_tv_id_list.search('#'+storedVars.source_ID_var+'#') != -1</td>
+	<td>source_check_label</td>
+</tr>
+<!--Netflix Bypass-->
+<tr>
+	<td>store</td>
+	<td>${backdrops}</td>
+	<td>backdrops_count</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.backdrops_count != &quot;0&quot;</td>
+	<td>check_posters_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string.search(storedVars.first_connector_string) != -1 ? storedVars.incident_string+&quot;, &quot; : storedVars.incident_string+storedVars.first_connector_string</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string+&quot;no backdrops&quot;</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>check_posters_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${posters}</td>
+	<td>posters_count</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.posters_count != &quot;0&quot;</td>
+	<td>source_check_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string.search(storedVars.first_connector_string) != -1 ? storedVars.incident_string+&quot;, &quot; : storedVars.incident_string+storedVars.first_connector_string</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string+&quot;no posters&quot;</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>source_check_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${streaming_source}</td>
+	<td>viewing_source_list</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.source_list.search(/(amazon)/i) != -1</td>
+	<td>amazon_source_check_label</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.source_list.search(/(hulu)/i) != -1</td>
+	<td>hulu_source_check_label</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.source_list.search(/(netflix)/i) != -1</td>
+	<td>netflix_source_check_label</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.source_list.search(/(online originals|streaming)/i) == -1</td>
+	<td>xml_write_label</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.viewing_source_list != &quot;&quot;</td>
+	<td>xml_write_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string.search(storedVars.first_connector_string) != -1 ? storedVars.incident_string+&quot;, &quot; : storedVars.incident_string+storedVars.first_connector_string</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string+&quot;no streaming sources&quot;</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>end_netflix_check_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>amazon_source_check_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.viewing_source_list.search(/(amazon)/i) != -1</td>
+	<td>end_netflix_check_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string.search(storedVars.first_connector_string) != -1 ? storedVars.incident_string+&quot;, &quot; : storedVars.incident_string+storedVars.first_connector_string</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string+&quot;no Amazon source&quot;</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>end_netflix_check_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>hulu_source_check_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.viewing_source_list.search(/(hulu)/i) != -1</td>
+	<td>end_netflix_check_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string.search(storedVars.first_connector_string) != -1 ? storedVars.incident_string+&quot;, &quot; : storedVars.incident_string+storedVars.first_connector_string</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string+&quot;no Hulu source&quot;</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>end_netflix_check_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>netflix_source_check_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.viewing_source_list.search(/(netflix)/i) != -1</td>
+	<td>end_netflix_check_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string.search(storedVars.first_connector_string) != -1 ? storedVars.incident_string+&quot;, &quot; : storedVars.incident_string+storedVars.first_connector_string</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string+&quot;no Netflix source&quot;</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>end_netflix_check_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>end_netflix_check_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>goto</td>
+	<td>xml_write_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>no_id_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>xml_write_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.incident_string == &quot;&quot;</td>
+	<td>xml_skip_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.xmlData+ '&lt;test item_report=&quot;${programming_source}${incident_string}&quot;/&gt;'</td>
+	<td>xmlData</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>xml_skip_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>endWhile</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>runScript</td>
+	<td>javascript{storedVars['xmlData'] += '&lt;/testdata&gt;';}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>exit_prompt_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>prompt(&quot;XML Data&quot;,storedVars.xmlData)</td>
+	<td>output_string_var</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${xmlData}</td>
+	<td></td>
+</tr>
+</tbody></table>
+</body>
+</html>

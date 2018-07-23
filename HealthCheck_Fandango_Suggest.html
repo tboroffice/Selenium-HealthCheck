@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="https://fhalidator.fanhattan.com/batch/job/52f8e2716aa53404a5001c7b" />
+<title>HealthCheck_Fandango_Suggest</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">HealthCheck_Fandango_Suggest</td></tr>
+</thead><tbody>
+<tr>
+	<td>store</td>
+	<td>&lt;testdata&gt;</td>
+	<td>xmlData</td>
+</tr>
+<tr>
+	<td>loadTestData</td>
+	<td>file://c:/Users/Strider/Documents/Work/Rovi/HealthCheck_Movie_Output.xml</td>
+	<td></td>
+</tr>
+<tr>
+	<td>while</td>
+	<td>!testdata.EOF()</td>
+	<td></td>
+</tr>
+<tr>
+	<td>nextTestData</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td></td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td> - has </td>
+	<td>first_connector_string</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${sourceID}</td>
+	<td>source_ID_var</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${title}</td>
+	<td>Fan_title_var</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.Fan_title_var.replace(/&amp;/g,&quot;&amp;amp;&quot;).replace(/[&gt;]/g,&quot;&amp;gt;&quot;).replace(/[&lt;]/g,&quot;&amp;lt;&quot;).replace(/[`’]/g,&quot;&amp;apos;&quot;).replace(/'/g,&quot;&amp;apos;&quot;).replace(/&quot;/g,&quot;&amp;quot;&quot;)</td>
+	<td>Fan_title_var</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${source}</td>
+	<td>source_list</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.source_list.replace(/&amp;/g,&quot;&amp;amp;&quot;).replace(/[&gt;]/g,&quot;&amp;gt;&quot;).replace(/[&lt;]/g,&quot;&amp;lt;&quot;).replace(/[`’]/g,&quot;&amp;apos;&quot;).replace(/'/g,&quot;&amp;apos;&quot;).replace(/&quot;/g,&quot;&amp;quot;&quot;)</td>
+	<td>source_list</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.Fan_title_var == &quot;&quot; ? storedVars.source_list+&quot; / &quot;+storedVars.source_ID_var : storedVars.source_list+&quot; / &quot;+storedVars.Fan_title_var</td>
+	<td>programming_source</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>fandango_check</td>
+	<td></td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>${sources}</td>
+	<td>viewing_source_list</td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.viewing_source_list.search(&quot;Fandango&quot;) == -1</td>
+	<td>end_fandango_check_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string.search(storedVars.first_connector_string) != -1 ? storedVars.incident_string+&quot;, &quot; : storedVars.incident_string+storedVars.first_connector_string</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.incident_string+&quot;Fandango link&quot;</td>
+	<td>incident_string</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>end_fandango_check_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>no_id_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>xml_write_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.incident_string == &quot;&quot;</td>
+	<td>xml_skip_label</td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>storedVars.xmlData+ '&lt;test item_report=&quot;${programming_source}${incident_string}&quot;/&gt;'</td>
+	<td>xmlData</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>xml_skip_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>endWhile</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>gotoIf</td>
+	<td>storedVars.trailer_prompt.search(/y/i) == -1 </td>
+	<td>xml_close_label</td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>xml_close_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>runScript</td>
+	<td>javascript{storedVars['xmlData'] += '&lt;/testdata&gt;';}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>label</td>
+	<td>exit_prompt_label</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeEval</td>
+	<td>prompt(&quot;XML Data&quot;,storedVars.xmlData)</td>
+	<td>output_string_var</td>
+</tr>
+<tr>
+	<td>echo</td>
+	<td>${xmlData}</td>
+	<td></td>
+</tr>
+
+</tbody></table>
+</body>
+</html>
